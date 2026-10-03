@@ -5,6 +5,7 @@
 **Polite, reproducible web harvesting. Fetch once, parse forever.**
 
 [![CI](https://github.com/sarthak213/harvester/actions/workflows/ci.yml/badge.svg)](https://github.com/sarthak213/harvester/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/harvester-kit)](https://pypi.org/project/harvester-kit/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%E2%80%933.14-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Typed: mypy strict](https://img.shields.io/badge/typed-mypy%20strict-informational)](https://mypy-lang.org)
@@ -44,7 +45,7 @@ complete run 20261003T044028Z
 ## Quick start
 
 ```bash
-pip install "git+https://github.com/sarthak213/harvester"
+pip install harvester-kit       # installs the `harvester` command and package
 
 harvester run examples/quotes.py          # crawl the scraping sandbox
 harvester reparse examples/quotes.py      # rebuild every record offline

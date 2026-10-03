@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "harvester"
+name = "harvester-kit"
 dynamic = ["version"]
 description = "Polite, reproducible web harvesting: fetch once, parse forever."
 readme = "README.md"
@@ -59,6 +59,7 @@ india-code = "harvester.sources.india_code:IndiaCodeSource"
 [project.urls]
 Homepage = "https://github.com/sarthak213/harvester"
 Issues = "https://github.com/sarthak213/harvester/issues"
+Changelog = "https://github.com/sarthak213/harvester/blob/main/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/harvester/__init__.py"

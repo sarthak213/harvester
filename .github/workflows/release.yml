@@ -1,0 +1,39 @@
+name: Release
+
+# Publishing a GitHub release builds the package and uploads it to PyPI using
+# Trusted Publishing (OIDC): no API token is stored anywhere.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install build twine
+      - run: python -m build
+      - run: twine check --strict dist/*
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/harvester-kit/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@v1.14.2
