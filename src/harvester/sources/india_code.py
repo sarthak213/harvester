@@ -25,6 +25,15 @@ class IndiaCodeSource(DSpaceSource):
     allowed_domains = ("indiacode.gov.in",)
     delay = 1.0
     concurrency = 1
+    # RFC 9309 says an unreachable robots.txt means "disallow"; this is a
+    # deliberate, documented exception (decided 2026-10-03).
+    robots_unavailable = "allow"
+    robots_unavailable_reason = (
+        "indiacode.gov.in/robots.txt has returned HTTP 500 since the July 2026 site "
+        "migration (checked 2026-10-03). The content is public Government of India "
+        "legislation (Copyright Act s.52(1)(q)) served through the site's public DSpace "
+        "REST API; harvested at one request per second with an identifying User-Agent."
+    )
     license = DataLicense(
         name="Government of India legislation; reproduction permitted by "
         "Indian Copyright Act 1957 s.52(1)(q)",

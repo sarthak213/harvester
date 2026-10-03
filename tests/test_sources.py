@@ -191,3 +191,12 @@ def test_dominant_script() -> None:
     assert dominant_script("Punishment for murder") == "latin"
     assert dominant_script("हत्या के लिए दंड") == "devanagari"
     assert dominant_script("123 ...") is None
+
+
+def test_robots_exception_is_documented() -> None:
+    # Any source that opts out of RFC 9309's disallow-on-5xx must say why.
+    from harvester.registry import installed_sources
+
+    for name, cls in installed_sources().items():
+        if cls.robots_unavailable == "allow":
+            assert len(cls.robots_unavailable_reason) > 40, name
