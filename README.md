@@ -139,6 +139,8 @@ flowchart LR
 | `dspace` | Any DSpace 7+ repository via its REST API: items, then files from chosen bundles, MD5-verified, with text files inlined. `-o base_url=… -o scope=<uuid> -o bundles=ORIGINAL` |
 | `india-code` | India's central Acts from [India Code](https://indiacode.gov.in): clean act records (number, year, ministry, enforcement date, repeal status) plus the official text extraction. `-o in_force_only=true -o pdf=true` |
 
+> **About India Code.** harvester was demonstrated and tested against [India Code](https://indiacode.gov.in), the Government of India's public repository of legislation, through its public DSpace REST API. The test suite includes a few small sample API responses (see [`tests/fixtures/india_code/`](tests/fixtures/india_code/README.md)). No harvested dataset is distributed with this project. harvester is an independent project and is not affiliated with or endorsed by India Code or the Government of India.
+
 ## CLI
 
 | Command | |
@@ -172,7 +174,7 @@ harvester is meant for collecting data you are entitled to collect, without bein
 git clone https://github.com/sarthak213/harvester && cd harvester
 python -m venv .venv && . .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                   # 41 tests, including a real HTTP server for end-to-end runs
+pytest                   # 43 tests, including a real HTTP server for end-to-end runs
 ruff check . && ruff format --check . && mypy src
 ```
 
