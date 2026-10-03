@@ -9,7 +9,7 @@ from harvester.models import CachePolicy, DataLicense, Record, Request
 from harvester.page import Page
 from harvester.source import Source
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "CachePolicy",

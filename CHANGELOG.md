@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.1 — 2026-10-03
+
+- **india-code:** repeal status is now `true` / `false` / `null`. India Code sets the flag on
+  only 845 of 1,753 central Acts; the rest were wrongly reported as in force. Parser version 2;
+  existing harvests can be corrected offline with `harvester reparse india-code`.
+- **india-code:** allow two concurrent requests (the file endpoint is slow server-side), with
+  request starts still at least one second apart.
+- **india-code:** crawl despite robots.txt returning HTTP 500, with the reason documented in the
+  source and in every run manifest.
+- Docs: note that India Code was used to demonstrate and test harvester; document the test fixtures.
+- CI: GitHub Actions updated to current major versions.
+
 ## 0.1.0 — 2026-10-03
 
 First release.
