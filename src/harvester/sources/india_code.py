@@ -24,7 +24,9 @@ class IndiaCodeSource(DSpaceSource):
     parser_version = "1"
     allowed_domains = ("indiacode.gov.in",)
     delay = 1.0
-    concurrency = 1
+    # The file endpoint spends ~5 s per request server-side before responding,
+    # so allow two in flight; request starts stay at least `delay` apart.
+    concurrency = 2
     # RFC 9309 says an unreachable robots.txt means "disallow"; this is a
     # deliberate, documented exception (decided 2026-10-03).
     robots_unavailable = "allow"
