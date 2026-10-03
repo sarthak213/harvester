@@ -136,7 +136,7 @@ def test_india_code_maps_acts_and_queues_files() -> None:
     nmc = acts[0]
     assert nmc.kind == "act" and nmc.id.startswith("AC_CEN_")
     assert nmc.data["jurisdiction"] == "CENTRAL" and nmc.data["year"] == "2019"
-    assert isinstance(nmc.data["repealed"], bool)
+    assert nmc.data["repealed"] in (True, False, None)
 
     bundle_requests = [r for r in follow if r.callback == "parse_bundles"]
     assert len(bundle_requests) == 3
@@ -200,3 +200,17 @@ def test_robots_exception_is_documented() -> None:
     for name, cls in installed_sources().items():
         if cls.robots_unavailable == "allow":
             assert len(cls.robots_unavailable_reason) > 40, name
+
+
+def test_india_code_repeal_flag_is_tri_state() -> None:
+    source = IndiaCodeSource()
+
+    def act(flag: str | None) -> Record:
+        metadata = {"dc.title": [{"value": "X Act"}]}
+        if flag is not None:
+            metadata["dc.identifier.repealed"] = [{"value": flag}]
+        return source.item_record({"uuid": "u", "metadata": metadata})
+
+    assert act("true").data["repealed"] is True
+    assert act("false").data["repealed"] is False
+    assert act(None).data["repealed"] is None  # unknown, not "in force"

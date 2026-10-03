@@ -21,7 +21,7 @@ CENTRAL_COMMUNITY = "f467b316-98f0-4c08-a722-a2627e45bc19"
 class IndiaCodeSource(DSpaceSource):
     name = "india-code"
     description = "Central Acts of India from India Code (indiacode.gov.in)"
-    parser_version = "1"
+    parser_version = "2"
     allowed_domains = ("indiacode.gov.in",)
     delay = 1.0
     # The file endpoint spends ~5 s per request server-side before responding,
@@ -79,7 +79,9 @@ class IndiaCodeSource(DSpaceSource):
                 "year": first("dc.date.act_year"),
                 "enacted_on": first("dc.date.enact_date"),
                 "in_force_from": first("dc.date.enforcement_date"),
-                "repealed": first("dc.identifier.repealed") == "true",
+                # India Code sets this flag on fewer than half of its Acts; when it
+                # is absent the status is unknown, not "in force".
+                "repealed": _flag(first("dc.identifier.repealed")),
                 "jurisdiction": first("dc.identifier.state_name"),
                 "ministry": first("dc.identifier.ministry_name"),
                 "department": first("dc.identifier.department_name"),
@@ -90,6 +92,12 @@ class IndiaCodeSource(DSpaceSource):
                 "metadata": md,
             },
         )
+
+
+def _flag(value: str | None) -> bool | None:
+    """'true' / 'false' to a bool; anything else is unknown (None)."""
+    normalised = (value or "").strip().lower()
+    return {"true": True, "false": False}.get(normalised)
 
 
 def _truthy(value: Any) -> bool:
